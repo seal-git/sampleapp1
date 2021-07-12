@@ -14,7 +14,6 @@ jobs:
       - name: execute via ssh
         env:
           SECRET_KEY_NAIST: ${{ secrets.NAIST }}
-          SECRET_KEY_SANDBOX: ${{ secrets.SANDBOX }}
           SSH_USER: ${{ secrets.USER_NAME }}
           SSH_ADDR: ${{ secrets.HOST }}
         run: |
@@ -25,4 +24,4 @@ jobs:
           ssh -oStrictHostKeyChecking=no ${SSH_USER}@sh.naist.jp \
           -i secret_key_naist \
           -t ssh -oStrictHostKeyChecking=no ${SSH_USER}@${SSH_ADDR} \
-          -i secret_key_sandbox 'source ~/sampleapp1/deploy.sh'"
+          -i ~/.ssh/naist_sandbox 'source ~/sampleapp1/deploy.sh'"
