@@ -21,6 +21,8 @@ jobs:
           echo "$SECRET_KEY_NAIST" > secret_key_naist
           echo "$SECRET_KEY_SANDBOX" > secret_key_sandbox
           chmod 600 secret_key_naist
-          ssh -oStrictHostKeyChecking=no ${SSH_USER}@sh.naist.jp -i secret_key_naist -t ssh sandbox
+          ssh -oStrictHostKeyChecking=no ${SSH_USER}@sh.naist.jp -i secret_key_naist "source touch a.txt"
+
+
 
 
