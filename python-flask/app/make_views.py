@@ -16,15 +16,15 @@ from app import my_app
 from flask import render_template, redirect, url_for
     
     
-@my_app.route('/')
+@my_app.route('/yoshinari')
 def view_top():
     return render_template("index.html")
 
-@my_app.route('/index')
+@my_app.route('/yoshinari/index')
 def view_index():
     return redirect(url_for('view_top'))
     
-@my_app.route('/about-us')
+@my_app.route('/yoshinari/about-us')
 def view_about_us():
     return render_template("about-us.html")
     
