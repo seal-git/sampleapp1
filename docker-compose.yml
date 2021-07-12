@@ -9,25 +9,23 @@ services:
     ports:
     - "10000:5000"
     volumes:
-    - /home/yuki-yos/sampleapp1/python-flask:/workspace
+    - ./python-flask:/workspace
     - /etc/group:/etc/group:ro #read only
     - /etc/passwd:/etc/passwd:ro #read only
     tty: true
-    networks:
-      - my-network
 
-  sql:
+  mysql:
     image: mysql
     container_name: mysql
     build:
       context: ./Dockerfiles
       dockerfile: Dockerfile-mysql
     restart: on-failure
-    hostname: my-mysql
+    hostname: mysql
     env_file:
       - .env
     environment:
-      MYSQL_USER: sample_user #新たにユーザーを作成する
+#      MYSQL_USER: sample_user #新たにユーザーを作成する
 #      MYSQL_DATABASE: sample_db #新たにDBを作成する
       TZ: "Asia/Tokyo"
       BIND-ADDRESS: 0.0.0.0
@@ -38,15 +36,12 @@ services:
     # データを永続化させる場合
     volumes:
       # 初期データを投入するSQLが格納されているdir
-      - /home/yuki-yos/sampleapp1/mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
       # 永続化するときにマウントするdir(ホスト側は空のディレクトリをマウントしないと初期データは登録されない！)
-      - /home/yuki-yos/sampleapp1/mysql/db:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     command:
       --secure-file-priv="/docker-entrypoint-initdb.d"
     tty: true
-    networks:
-      - my-network
 
-networks:
-    my-network:
-        external: true
+volumes:
+    mysql-data:
