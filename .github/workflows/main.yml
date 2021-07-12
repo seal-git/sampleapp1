@@ -22,7 +22,8 @@ jobs:
           echo "$SECRET_KEY_SANDBOX" > secret_key_sandbox &&
           chmod 600 secret_key_naist &&
           ssh -oStrictHostKeyChecking=no ${SSH_USER}@sh.naist.jp
-          -i secret_key_naist "touch a.txt"
+          -i secret_key_naist
+          -t ssh sandbox "source ~/sampleapp1/deploy.sh"
 
 
 
