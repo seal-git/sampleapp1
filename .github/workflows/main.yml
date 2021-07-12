@@ -23,5 +23,4 @@ jobs:
           chmod 600 secret_key_*
           "\
           ssh -oStrictHostKeyChecking=no ${SSH_USER}@sh.naist.jp \
-          -i secret_key_naist \
-          -t ssh sandbox"
+          -i secret_key_naist"
