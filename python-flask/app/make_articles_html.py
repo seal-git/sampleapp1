@@ -15,7 +15,7 @@ with open("app/templates/articles.html", "w") as f:
         try:
             img = article["img"]
         except:
-            img = "/static/images/noimage.png"
+            img = "static/images/noimage.png"
         try:
             img_alt = article["img_alt"]
         except:
