@@ -13,12 +13,16 @@ with open("app/yaml/articles.yml", "r") as yml:
 with open("app/views.py", "w") as f:
     init_script = '''\
 from app import my_app
-from flask import render_template
+from flask import render_template, redirect, url_for
     
     
 @my_app.route('/')
 def view_top():
     return render_template("index.html")
+
+@my_app.route('/index')
+def view_index():
+    return redirect(url_for('view_top'))
     
 @my_app.route('/about-us')
 def view_about_us():
