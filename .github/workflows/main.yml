@@ -25,4 +25,4 @@ jobs:
           ssh -oStrictHostKeyChecking=no ${SSH_USER}@sh.naist.jp \
           -i secret_key_naist \
           -t ssh -oStrictHostKeyChecking=no ${SSH_USER}@${SSH_ADDR} \
-          -i secret_key_sandbox 'source ~/sampleapp1/deploy.sh'"
+          -i secret_key_sandbox"
