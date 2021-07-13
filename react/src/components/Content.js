@@ -4,7 +4,23 @@ import {Typography, Button} from "@material-ui/core";
 import {useState, useContext} from "react"
 import axios from "axios";
 
+
 function Content(props) {
+    const [sentence, setSentence] = useState('loading...');
+
+    async function setSentenceFromDB() {
+        let sentence;
+        await axios.post('/api/db_sample_random_generate')
+            .then(result => {
+                console.log(result)
+                sentence = result.data.content.sentence;
+                console.log(sentence)
+                setSentence(sentence);
+            })
+            .catch(error => {
+                return 'error';
+            })
+    }
 
     return (
         <div className="content-wrapper">
@@ -28,17 +44,24 @@ function Content(props) {
                 <Button color="primary" variant="contained">
                     Yes, it's a correct sentence.
                 </Button>
-                <Button color="secondary" variant="contained">
+                <Button color="secondary"
+                        variant="contained"
+                >
                     Not at all.
                 </Button>
             </div>
             <div className="sentence-area-wrapper">
-                <Typography>
+                <Typography align="left">
                     sentence:
                 </Typography>
                 <div className="sentence-area">
+                    <Typography align="left">
+                        {sentence}
+                    </Typography>
                 </div>
-                <Button className="btn-reload">
+                <Button className="btn-reload"
+                        onClick={setSentenceFromDB}
+                >
                     reload sentence
                 </Button>
             </div>
