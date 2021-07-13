@@ -7,12 +7,25 @@ services:
       context: ./Dockerfiles
       dockerfile: Dockerfile-python
     ports:
-    - "10000:5000"
+    - "5000:5000"
     restart: on-failure
     volumes:
     - ./python-flask:/workspace
     - /etc/group:/etc/group:ro #read only
     - /etc/passwd:/etc/passwd:ro #read only
+    tty: true
+
+  react:
+    image: react
+    container_name: react
+    build:
+      context: ./Dockerfiles
+      dockerfile: Dockerfile-react
+    ports:
+    - "10000:3000"
+    restart: on-failure
+    volumes:
+    - ./react:/workspace
     tty: true
 
   mysql:
