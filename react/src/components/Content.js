@@ -2,7 +2,7 @@ import React from 'react';
 import './Content.css'
 import {Typography, Button} from "@material-ui/core";
 import {useState, useContext} from "react"
-import axios from "axios";
+import {myAxios} from "./myAxios.js";
 import Home from './Home'
 
 function Content(props) {
@@ -10,7 +10,7 @@ function Content(props) {
 
     async function setSentenceFromDB() {
         let sentence;
-        await axios.post('/api/db_sample_random_generate')
+        await myAxios.post('/api/db_sample_random_generate')
             .then(result => {
                 console.log(result)
                 sentence = result.data.content.sentence;
@@ -24,7 +24,7 @@ function Content(props) {
 
     const onClickYes = () => {
         const data = {data: sentence};
-        axios.post('/api/SendFeedback', data)
+        myAxios.post('/api/SendFeedback', data)
             .then(result => {
                 console.log('yes')
                 setSentenceFromDB();
