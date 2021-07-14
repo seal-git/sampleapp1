@@ -34,12 +34,12 @@ def db_sample_random_generate():
     return jsonify(result_dict)
 
 
-@my_app.route('/get_feedback_yes_no', methods=['POST'])
-# yes/noボタンが押されたらfeedbackとして処理する
-def get_feedback_yes_no():
+@my_app.route('/SendFeedback', methods=['POST'])
+# feedback処理する
+def send_feedback():
     json_data = request.json
     print(json_data)
-    return 
+    return 'success'
 
 
 
