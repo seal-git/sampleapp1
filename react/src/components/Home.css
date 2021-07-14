@@ -4,5 +4,10 @@ html, body, #root, .App{
 
 .Home{
     min-height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+header{
+    width: 100%;
 }
