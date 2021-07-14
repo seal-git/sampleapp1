@@ -2,7 +2,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = app => {
   app.use(
-    '/yoshinari/api',
+    '/api',
     createProxyMiddleware({
       target: 'http://python-flask:5000',
       // changeOrigin: true,
