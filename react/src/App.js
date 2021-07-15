@@ -1,5 +1,12 @@
 import React from "react";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {
+    Router,
+    Link,
+    Route,
+    Switch,
+    useHistory
+} from "react-router-dom";
+import {createBrowserHistory} from "history";
 import logo from './logo.svg';
 import './App.css';
 import Menu from './components/Menu.js'
@@ -8,8 +15,11 @@ import Feedback from './components/Feedback.js'
 
 
 function App() {
+    const myHistory = createBrowserHistory(
+        {basename: '/yoshinari/'}
+    );
     return (
-        <Router>
+        <Router history={myHistory}>
             <div className="App">
                 <Switch>
                     <Route exact path='/' component={Menu}/>
@@ -19,7 +29,7 @@ function App() {
                 </Switch>
             </div>
         </Router>
-);
+    );
 }
 
 export default App;
