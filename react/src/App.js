@@ -1,12 +1,12 @@
 import React from "react";
 import {
-    Router,
+    BrowserRouter as Router,
     Link,
     Route,
     Switch,
     useHistory
 } from "react-router-dom";
-import {createBrowserHistory} from "history";
+// import {createBrowserHistory} from "history";
 import logo from './logo.svg';
 import './App.css';
 import Menu from './components/Menu.js'
@@ -15,11 +15,11 @@ import Feedback from './components/Feedback.js'
 
 
 function App() {
-    const myHistory = createBrowserHistory(
-        {basename: '/yoshinari/'}
-    );
+    // const myHistory = createBrowserHistory(
+    //     {basename: '/yoshinari/'}
+    // );
     return (
-        <Router history={myHistory}>
+        <Router basename="/yoshinari">
             <div className="App">
                 <Switch>
                     <Route exact path='/' component={Menu}/>
