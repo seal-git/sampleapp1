@@ -1,0 +1,12 @@
+config:
+  csv_dir:  ./db/hoge
+  make_all: false #tureなら存在しているdbも含めて全て作り直す
+
+data:
+  - db1:
+      csv_name: csv_db1
+      table_name: table_db1
+
+
+
+
