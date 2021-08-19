@@ -3,6 +3,8 @@
 dbやライブラリから文やデータを取得する
 ### args
 * db 参照するデータベース名
+* isRandom Trueならランダムに取得: [True, False]
+* id 取得するデータのid
 ### return
 * data 取得データ
 

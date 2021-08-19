@@ -1,16 +1,16 @@
 version: '3'
 services:
   python:
-    image: python-flask
-    container_name: python-flask
+    image: flask
+    container_name: flask
     build:
       context: ./Dockerfiles
-      dockerfile: Dockerfile-python
+      dockerfile: Dockerfile-flask
     ports:
     - "5000:5000"
     restart: on-failure
     volumes:
-    - ./python-flask:/workspace
+    - ./flask:/workspace
     - /etc/group:/etc/group:ro #read only
     - /etc/passwd:/etc/passwd:ro #read only
     tty: true
