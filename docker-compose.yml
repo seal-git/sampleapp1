@@ -45,8 +45,6 @@ services:
       BIND-ADDRESS: 0.0.0.0
     expose:
       - "3306"
-    ports:
-      - "3306:3306"
     # データを永続化させる場合
     volumes:
       # 初期データを投入するSQLが格納されているdir
