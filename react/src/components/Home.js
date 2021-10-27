@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useContext} from "react"
 import "./Home.css"
 import "./Content.js"
-import "./Feedback.js"
+import "./SST2.js"
 import axios from "axios";
 import Content from "./Content";
 import {

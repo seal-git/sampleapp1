@@ -12,7 +12,7 @@ function Feedback(props) {
         <Home>
             <div className="content-wrapper">
                 <Link to='/is-it-sentence'>is it sentence</Link>
-                <Link to='/feedback'>feedback</Link>
+                <Link to='/feedback'>SST-2 anno</Link>
             </div>
         </Home>
     )

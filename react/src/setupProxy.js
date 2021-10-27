@@ -4,7 +4,7 @@ module.exports = app => {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://python-flask:5000',
+      target: 'http://flask:5000',
       // changeOrigin: true,
       pathRewrite: { '^/api': '' }
     })
