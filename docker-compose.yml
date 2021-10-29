@@ -1,8 +1,8 @@
 version: '3'
 services:
-  python:
-    image: flask
-    container_name: flask
+  sab:
+    image: sab
+    container_name: sab
     build:
       context: ./Dockerfiles
       dockerfile: Dockerfile-flask
@@ -15,9 +15,9 @@ services:
     - /etc/passwd:/etc/passwd:ro #read only
     tty: true
 
-  react:
-    image: react
-    container_name: react
+  saf:
+    image: saf
+    container_name: saf
     build:
       context: ./Dockerfiles
       dockerfile: Dockerfile-react
@@ -28,9 +28,9 @@ services:
     - ./react:/workspace
     tty: true
 
-  mysql:
-    image: mysql
-    container_name: mysql
+  sad:
+    image: sad
+    container_name: sad
     build:
       context: ./Dockerfiles
       dockerfile: Dockerfile-mysql
