@@ -23,10 +23,14 @@ services:
       dockerfile: Dockerfile-react
     ports:
     - "10000:3000"
+    - "6006:6006"
     restart: on-failure
     volumes:
     - ./react:/workspace
     tty: true
+    environment:
+    - CHOKIDAR_USEPOLLING=true
+    - SKIP_PREFLIGHT_CHECK=true
 
   sad:
     image: sad
