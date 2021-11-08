@@ -16,14 +16,12 @@ import {
 const style = css`
   html, body, #root, .App {
     min-height: 100vh;
-    background-color: #0b2e13;
   }
-
   min-height: 100vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-
+  background-color: #0b2e13; 
   header {
     width: 100%;
   }
