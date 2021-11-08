@@ -9,9 +9,9 @@ import {
 // import {createBrowserHistory} from "history";
 import logo from './logo.svg';
 import './App.css';
-import Menu from './components/Menu.js'
-import Content from './components/Content.js'
-import SST2 from './components/SST2.js'
+import Menu from './components/pages/Menu.js'
+import Content from './components/pages/Content.js'
+import SST2_old from './components/pages/SST2_old.js'
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
                 <Switch>
                     <Route exact path='/' component={Menu}/>
                     <Route exact path='/is-it-sentence' component={Content}/>
-                    <Route exact path='/feedback' component={SST2}/>
+                    <Route exact path='/feedback' component={SST2_old}/>
                     <Route exact component={Menu}/>
                 </Switch>
             </div>

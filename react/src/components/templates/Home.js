@@ -1,10 +1,9 @@
 import React from 'react';
+import {css} from '@emotion/react';
 import {useState, useContext} from "react"
-import "./Home.css"
-import "./Content.js"
-import "./SST2.js"
-import axios from "axios";
-import Content from "./Content";
+import "../pages/Content.js"
+import "../pages/SST2_old.js"
+import Content from "../pages/Content";
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,9 +13,25 @@ import {
 
 
 // ベースコンポーネントとして使う
+const style = css`
+  html, body, #root, .App {
+    min-height: 100vh;
+    background-color: #0b2e13;
+  }
+
+  min-height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    width: 100%;
+  }
+`
+
 function Home(props) {
     return (
-        <div className='Home'>
+        <div css={style} className={'Home'}>
             <header>
                 <Link to='/'>
                     top

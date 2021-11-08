@@ -1,13 +1,11 @@
 import React from 'react';
+import './Content.css'
 import {Typography, Button} from "@material-ui/core";
 import {useState, useContext} from "react"
-import axios from "axios";
-import './Content.css'
-import Home from './Home'
-import {myAxios} from "./myAxios";
+import {myAxios} from "../myAxios.js";
+import Home from '../templates/Home'
 
-
-function SST2(props) {
+function Content(props) {
     const [sentence, setSentence] = useState('loading...');
 
     async function setSentenceFromDB() {
@@ -34,6 +32,8 @@ function SST2(props) {
             .catch(error => {
                 console.log('error')
             })
+
+
     }
 
     return (
@@ -41,15 +41,18 @@ function SST2(props) {
             <div className="content-wrapper">
                 <div className="content-title">
                     <Typography variant="h1">
-                        SST-2 positive or negative
+                        is it sentence?
                     </Typography>
                 </div>
                 <div className='content-description'>
                     <Typography>
-                        映画のレビュー文が表示されます。ポジティブな表現ならpositive, ネガティブな表現ならnegativeを押してください。
+                        文字列がランダムに表示されます．「主語と述語を伴った英文」であればYes，そうでなければNoを押してください．
                     </Typography>
                     <Typography>
-                        A review is shown. If it is positive, press "positive", otherwise "negative"
+                        A string of characters will be displayed randomly.
+                        If it is a "correct English sentence" with a subject and
+                        predicate,
+                        press Yes; otherwise, press No.
                     </Typography>
                 </div>
                 <div className="btn-area-wrapper">
@@ -57,12 +60,12 @@ function SST2(props) {
                             variant="contained"
                             onClick={onClickYes}
                     >
-                        Positive
+                        Yes, it's a correct sentence.
                     </Button>
                     <Button color="secondary"
                             variant="contained"
                     >
-                        Negative
+                        Not at all.
                     </Button>
                 </div>
                 <div className="sentence-area-wrapper">
@@ -85,4 +88,4 @@ function SST2(props) {
     )
 }
 
-export default SST2;
+export default Content;

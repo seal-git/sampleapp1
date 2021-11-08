@@ -2,7 +2,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import './Content.css'
-import Home from './Home.js'
+import Home from '../templates/Home.js'
 import {css, jsx} from '@emotion/react'
 import {Typography, Button} from "@material-ui/core";
 import {useState, useContext} from "react"
