@@ -13,3 +13,6 @@ class Config:
         })
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+
+class MyConfig:
+    INIT_DB = True

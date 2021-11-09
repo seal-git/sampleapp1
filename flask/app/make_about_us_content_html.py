@@ -1,4 +1,4 @@
-from app import my_app, db
+from app import app_, db
 import markdown
 
 print("making about-us-content.html")

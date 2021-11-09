@@ -1,6 +1,6 @@
 #make html page from yml when app starts
 import yaml
-from app import my_app, db
+from app import app_, db
 
 
 print("making articles.html")

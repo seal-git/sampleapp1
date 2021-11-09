@@ -2,7 +2,7 @@
 import yaml
 import re
 from pathlib import Path
-from app import my_app, db
+from app import app_, db
 
 
 print("making views.py")

@@ -49,8 +49,9 @@ essential-generators = "*"
 flask-sqlalchemy = "*"
 cryptography = "*"
 pyyaml = "*"
-mysql-connector-python = "*"
 markdown = "*"
+pymysql = "*"
+mysqlclient = "*"
 
 [dev-packages]
 
