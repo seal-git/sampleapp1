@@ -1,6 +1,7 @@
 from sqlalchemy import *
 from sqlalchemy.orm import *
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.dialects.mysql import *
 import os
 
 from app import config
@@ -41,7 +42,7 @@ class GutenbergSentence(Base):
     __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
     id = Column("id", Integer, primary_key=True)
     book_id = Column("book_id", Integer)
-    sentence = Column("sentence", UnicodeText)
+    sentence = Column("sentence", LONGTEXT)
 
 
 # ============================================================================================================

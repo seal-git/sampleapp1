@@ -15,4 +15,5 @@ class Config:
     SQLALCHEMY_ECHO = False
 
 class MyConfig:
-    INIT_DB = True
+    INIT_DATA = False # dataのcsvを読み直す
+    INIT_DB = False # 全て作り直す
