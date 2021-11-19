@@ -33,6 +33,8 @@ def db_sample_random_generate():
     result_dict = db_random_generate("gutenberg_sentence")
     return jsonify(result_dict)
 
+@app_.route("/get_sentence", methods=["POST"])
+
 
 @app_.route('/SendFeedback', methods=['POST'])
 # feedback処理する
