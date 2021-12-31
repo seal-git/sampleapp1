@@ -12,7 +12,7 @@ import './App.css';
 import Menu from './components/pages/Menu.js'
 import Content from './components/pages/Content.js'
 import SST2_old from './components/pages/SST2_old.js'
-import TsukubaCorpus from "./components/pages/tsukuba_corpus";
+import TsukubaCorpus from "./components/pages/TsukubaCorpus";
 
 
 function App() {

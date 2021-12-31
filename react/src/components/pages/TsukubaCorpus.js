@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {css} from "@emotion/react";
-import {Typography, Button} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import {useState, useContext} from "react"
 import axios from "axios";
 import './Content.css'
 import Home from '../templates/Home'
+import Button from "../atoms/Button";
 import {myAxios} from "../myAxios";
 
 
@@ -48,9 +49,7 @@ function TsukubaCorpus(props) {
         <Home>
             <div className="content-wrapper" css={wrapperStyle}>
                 <div className="content-title">
-                    <Typography variant="h1">
-                        SST-2 positive or negative
-                    </Typography>
+                    title
                 </div>
                 <div className='content-description'>
                     <Typography>
@@ -61,13 +60,14 @@ function TsukubaCorpus(props) {
                     <Button color="primary"
                             variant="contained"
                             onClick={onClickYes}
+                            text={"yes"}
                     >
                         Positive
                     </Button>
                     <Button color="secondary"
                             variant="contained"
+                            text={"no"}
                     >
-                        Negative
                     </Button>
                 </div>
                 <div className="sentence-area-wrapper">
@@ -81,8 +81,8 @@ function TsukubaCorpus(props) {
                     </div>
                     <Button className="btn-reload"
                             onClick={setSentenceFromDB}
+                            text={"reload"}
                     >
-                        reload sentence
                     </Button>
                 </div>
             </div>
