@@ -44,6 +44,24 @@ class GutenbergSentence(Base):
     book_id = Column("book_id", Integer)
     sentence = Column("sentence", LONGTEXT)
 
+# TODO: テーブルクラスを自動生成して自動追加に対応する
+#  ヘッダーや型の自動検出，テーブルの情報を集めたスーパーテーブルなど
+
+
+class TsukubaCorpus(Base):
+    """
+    id, document_id, document_local_id, label1, label2, sentence
+    """
+    __tablename__ = "tsukuba_corpus"
+    __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
+    id = Column("id", Integer, primary_key=True)
+    document_id = Column("document_id", Integer)
+    document_local_id = Column("document_local_id", Integer)
+    label1 = Column("label1", String(20))
+    label2 = Column("label2", String(20))
+    sentence = Column("sentence", LONGTEXT)
+
+
 
 # ============================================================================================================
 # INIT_DBがTrueならDBを初期化する

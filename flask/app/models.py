@@ -34,7 +34,10 @@ def db_sample_random_generate():
     return jsonify(result_dict)
 
 @app_.route("/get_sentence", methods=["POST"])
+# tsukuba_corpusを返す
+def get_sentence():
 
+    return "sentence"
 
 @app_.route('/SendFeedback', methods=['POST'])
 # feedback処理する

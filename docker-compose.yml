@@ -13,8 +13,6 @@ services:
       - .env
     volumes:
     - ./flask:/workspace
-    - /etc/group:/etc/group:ro #read only
-    - /etc/passwd:/etc/passwd:ro #read only
     tty: true
 
   saf:

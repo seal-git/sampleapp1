@@ -12,6 +12,7 @@ import './App.css';
 import Menu from './components/pages/Menu.js'
 import Content from './components/pages/Content.js'
 import SST2_old from './components/pages/SST2_old.js'
+import TsukubaCorpus from "./components/pages/tsukuba_corpus";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                     <Route exact path='/' component={Menu}/>
                     <Route exact path='/is-it-sentence' component={Content}/>
                     <Route exact path='/feedback' component={SST2_old}/>
+                    <Route exact path='/tsukuba-corpus' component={TsukubaCorpus}/>
                     <Route exact component={Menu}/>
                 </Switch>
             </div>
