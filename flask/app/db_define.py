@@ -20,9 +20,15 @@ ENGINE = create_engine(
     max_overflow=10
 )
 
+class BaseBase(object):
+    def toDict(self):
+        model = {}
+        for column in self.__table__.columns:
+            model[column.name] = getattr(self, column.name)
+        return model
 
 # modelで使用する
-Base = declarative_base()
+Base = declarative_base(cls=BaseBase)
 
 
 class GutenbergInformation(Base):
@@ -60,8 +66,32 @@ class TsukubaCorpus(Base):
     label1 = Column("label1", String(20))
     label2 = Column("label2", String(20))
     sentence = Column("sentence", LONGTEXT)
+    data_group = Column("data_group", String(20))
+    data_group_local_id = Column("data_group_local_id", Integer)
+
+class User(Base):
+    """
+    user_id, data_group, data_group_local_id
+    data_group_local_idの初期値は0で，どの文も参照していない状態．
+    """
+    __tablename__ = "user"
+    __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
+    user_id = Column("user_id", Integer, primary_key=True)
+    data_group = Column("data_group", String(20), nullable=False)
+    data_group_local_id = Column("data_group_local_id", Integer, nullable=False)
 
 
+class Feedback(Base):
+    """
+    user_id, data_group, data_group_local_id, label
+    """
+    __tablename__ = "feedback"
+    __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
+    feedback_id = Column("feedback_id", Integer, autoincrement=True, primary_key=True)
+    user_id = Column("user_id", Integer, nullable=False)
+    data_group = Column("data_group", String(20), nullable=False)
+    data_group_local_id = Column("data_group_local_id", Integer, nullable=False)
+    label = Column("label", String(20), nullable=False)
 
 # ============================================================================================================
 # INIT_DBがTrueならDBを初期化する

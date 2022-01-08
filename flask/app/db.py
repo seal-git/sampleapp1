@@ -2,8 +2,127 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from flask import jsonify
 from app import app_, db_
+from app.db_define import *
 from random import randint
 # from flask_marshmallow import Marshmallow
+
+def get_sentence_from_tsukuba_corpus(user_id):
+    """
+    TsukubaCorpusから1行取得
+    user_idがユーザーの識別子になる
+    :return: sentence(dictとして返す)
+    """
+    print("get from tsukuba corpus",user_id)
+
+    with Session() as session:
+        register_new_user(user_id)
+        user = session.query(User).filter_by(user_id=user_id).first()
+        sentence = session.query(TsukubaCorpus).filter_by(
+            data_group=user.data_group,
+            data_group_local_id=user.data_group_local_id
+            ).first().toDict()
+    return sentence
+
+def register_new_user(user_id):
+    """
+    user_idが未登録ならそれを登録する
+    :param user_id:
+    :return:
+    """
+
+    with Session() as session:
+        if session.query(User).filter_by(user_id=user_id).first() is None:
+            user = User(
+                user_id = user_id,
+                data_group = "tc1",
+                data_group_local_id = 1
+            )
+            session.add(user)
+            session.commit()
+            print(f"user {user_id} is registered")
+    return
+
+def update_user_sentence(user_id, count=1):
+    """
+    ユーザーのdata_group_local_idを次の番号に当たるものに更新する
+    data_group_local_idが範囲外を指さないようにする
+    :param user_id:
+    :param count: いくつ進めるか指定
+    :return:
+    """
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        data_num = session.query(TsukubaCorpus).filter_by(data_group=user.data_group).count()
+        if count>=0:
+            user.data_group_local_id = min(data_num, user.data_group_local_id+count)
+        else:
+            user.data_group_local_id = max(1, user.data_group_local_id+count)
+
+        print(f"update user{user_id}'s sentence to {user.data_group_local_id}")
+        session.commit()
+    return
+
+def check_user_exist(user_id):
+    """
+    ランダムに作ったuser_idが存在するかチェック
+    :return:
+    """
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        if user is None:
+            return False
+        else:
+            return True
+
+def save_feedback(user_id, label):
+    """
+    アノテーション結果を保存する
+    :param user_id:
+    :param val:
+    :return:
+    """
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        feedback = session.query(Feedback).filter_by(
+            user_id = user.user_id,
+            data_group=user.data_group,
+            data_group_local_id=user.data_group_local_id,
+        ).first()
+        if feedback is not None:
+            feedback.label = label
+            print(f"label updated:{user_id}-{user.data_group}-{user.data_group_local_id}:{label}")
+        else:
+            new_feedback = Feedback(
+                user_id = user.user_id,
+                data_group = user.data_group,
+                data_group_local_id = user.data_group_local_id,
+                label = label
+            )
+            session.add(new_feedback)
+            print(f"label registered:{user_id}-{user.data_group}-{user.data_group_local_id}:{label}")
+
+        session.commit()
+    return
+
+def get_label(user_id):
+    """
+    userに現在表示している文のラベルが既にあればそれを返す
+    :param user_id:
+    :return:
+    """
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        feedback = session.query(Feedback).filter_by(
+            user_id = user.user_id,
+            data_group=user.data_group,
+            data_group_local_id=user.data_group_local_id,
+        ).first()
+        if feedback is None:
+            return None
+        else:
+            return feedback.label
+
+
 
 # ma = Marshmallow()
 #

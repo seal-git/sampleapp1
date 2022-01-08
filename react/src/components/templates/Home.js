@@ -1,9 +1,6 @@
 import React from 'react';
 import {css} from '@emotion/react';
 import {useState, useContext} from "react"
-import "../pages/Content.js"
-import "../pages/SST2_old.js"
-import Content from "../pages/Content";
 import {
     BrowserRouter as Router,
     Switch,

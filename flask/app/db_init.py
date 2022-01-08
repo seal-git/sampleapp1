@@ -66,7 +66,9 @@ with Session() as session:
                             document_local_id=row[2],
                             label1=row[3],
                             label2=row[4],
-                            sentence=row[5]
+                            sentence=row[5],
+                            data_group="tc1",
+                            data_group_local_id=row[0]
                         )
                         session.add(sentence)
                         session.commit()

@@ -1,6 +1,7 @@
 import subprocess
 
 res = subprocess.call('pipenv install --system', shell=True)
+res = subprocess.call('pytest -s', shell=True)
 
 from app import app_
 
