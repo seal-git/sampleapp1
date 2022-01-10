@@ -12,9 +12,11 @@ import {ReactComponent as BackIcon} from "../assets/back_icon.svg";
 function Button(props) {
 
     let wrapperStyle = css`
-      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
-
+      display: flex;
+      justify-content: center;
       button {
+        padding: 10px;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
         background-color: #E6E6E6;
         cursor: pointer;
         //padding: 5px 10px 5px 10px;
@@ -23,7 +25,6 @@ function Button(props) {
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-
       }
 
       svg {
@@ -34,6 +35,7 @@ function Button(props) {
 
     let bigButtonStyle = css`
       ${wrapperStyle};
+      display: block;
       button {
         flex-flow: column;
         font-size: 1rem;
@@ -43,14 +45,10 @@ function Button(props) {
         width: 3rem;
         fill: black;
       }
-
-      //button:disabled ~ svg{
-      //    fill: #9e9e9e;
-      //}
     }
     `
 
-    let text = "未設定";
+    let text;
     let icon;
     if (props.type == "usage") {
         text = "使いかた"
@@ -78,6 +76,8 @@ function Button(props) {
         `
         icon = <BackIcon/>
         text = "戻る"
+    }else{
+        text = props.text;
     }
 
     return (

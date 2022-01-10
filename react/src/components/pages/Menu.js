@@ -21,6 +21,9 @@ function Feedback(props) {
             <div css={style}>
                 <Link to='/feedback'>SST-2 anno</Link>
             </div>
+            <div css={style}>
+                <Link to='/tsukuba-corpus'>Tsukuba-corpus</Link>
+            </div>
         </Home>
     )
 }

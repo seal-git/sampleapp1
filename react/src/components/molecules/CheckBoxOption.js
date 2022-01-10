@@ -14,19 +14,19 @@ import CheckBox from "./CheckBox";
 function CheckBoxOption(props) {
 
     let icon;
-    if(props.checked == props.id){
-        icon = <CheckBoxIcon />
-    }else{
+    if (props.checked == props.id) {
+        icon = <CheckBoxIcon/>
+    } else {
         icon = <BoxIcon/>
     }
 
     let optionStyle = css`
+      display: flex;
+      justify-content: left;
+      align-items: center;
       font-size: 1.5rem;
-
-      input {
-        appearance: none;
-      }
-      svg{
+      cursor: default;
+      svg {
         margin-right: 0.5rem;
         width: 1.2rem;
         height: 1.2rem;
@@ -34,17 +34,13 @@ function CheckBoxOption(props) {
     `
 
     return (
-        <div css={optionStyle}>
-            <input type={"radio"}
-                   name={"option"}
-                   id={props.id}
-                   value={props.value}
-                   onChange={props.onChange}
-            />
-            <label for={props.id}>
-                {icon}
-                {props.value}
-            </label>
+        <div css={optionStyle}
+             id={props.id}
+             value={props.value}
+             onClick={props.onChange}
+        >
+            {icon}
+            {props.value}
         </div>
     )
 

@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {css} from "@emotion/react";
 import {Typography} from "@material-ui/core";
 import {useState, useContext,} from "react"
 import {useLocation, useParams} from "react-router-dom";
 import axios from "axios";
 import {myAxios} from "../myAxios";
+import {useModal} from "react-hooks-use-modal";
 
 import Home from '../templates/Home'
 import Header from "../organisms/Header";
@@ -12,6 +13,7 @@ import Button from "../atoms/Button";
 import PageTemplate from "../organisms/PageTemplate";
 import button from "../atoms/Button";
 import CheckBox from "../molecules/CheckBox";
+import Usage from "../molecules/Usage";
 
 
 function TsukubaCorpus(props) {
@@ -19,8 +21,16 @@ function TsukubaCorpus(props) {
     const [sentence, setSentence] = useState('loading...');
     const [id, setId] = useState();
     const [label, setLabel] = useState();
+    const [Modal, open, close, isOpen] = useModal("root");
+
+    // URLクエリからuserIdを取得する
+    let search = useLocation().search;
+    let query = new URLSearchParams(search);
+    const [userId, setUserId] = useState(query.get("userId"));
+
     useEffect(() => {
-        initSession();
+        //初期描画時に文を取得
+        initSession(userId);
     }, [])
     useEffect(() => {
         //チェックがないときはnextボタンを無効化する
@@ -64,50 +74,35 @@ function TsukubaCorpus(props) {
     let buttonAreaStyle = css`
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 30px;
     `
 
-    let search = useLocation().search;
-    let query = new URLSearchParams(search);
-    let userId = query.get("userId");
 
-    async function initSession() {
-        let sentence, id;
+    const  initSession = (userId) => {
         let data = {};
         if (userId !== null) {
             data = {
                 "user_id": userId,
             }
         }
-        await myAxios.post('/api/get_sentence', data)
+        myAxios.post('/api/get_sentence', data)
             .then(result => {
-                console.log(result)
-                sentence = result["data"]["sentence"];
-                id = result["data"]["id"];
-                console.log(sentence)
-                setSentence(sentence);
-                setId(id);
+                console.log(result["data"])
+                setSentence(result["data"]["sentence"]);
+                setId(result["data"]["id"]);
+                setLabel(result["data"]["label"])
                 if (userId === null) {
-                    userId = result["data"]["user_id"];
-                    window.history.replaceState({}, "", `?userId=${userId}`)
+                    setUserId(result["data"]["user_id"]);
+                    window.history.replaceState(
+                        {},
+                        "",
+                        `?userId=${result["data"]["user_id"]}`)
                 }
             })
             .catch(error => {
                 return 'error';
             })
     }
-
-const onClickYes = () => {
-    const data = {data: sentence};
-    myAxios.post('/api/SendFeedback', data)
-        .then(result => {
-            console.log('yes')
-            initSession();
-        })
-        .catch(error => {
-            console.log('error')
-        })
-}
 
 const onClickNext = () => {
     const data = {
@@ -151,9 +146,6 @@ const onClickBack = () => {
         })
 }
 
-const showUsage = () => {
-
-}
 
 return (
     <PageTemplate>
@@ -162,7 +154,10 @@ return (
                 Type A
             </div>
             <div css={optionAreaStyle}>
-                <Button type={"usage"} onClick={initSession}/>
+                <Button type={"usage"} onClick={open}/>
+                <Modal>
+                    <Usage close={close}/>
+                </Modal>
             </div>
             <div css={sentenceAreaStyle}>
                 <div className={"id-area"}>

@@ -51,10 +51,12 @@ def get_sentence():
 
 
     sentence = get_sentence_from_tsukuba_corpus(user_id=user_id)
+    label = get_label(user_id)
     data = {
         "id": sentence["id"],
         "sentence": sentence["sentence"],
         "user_id": user_id,
+        "label": label,
     }
 
     return jsonify(data)

@@ -58,7 +58,7 @@ def update_user_sentence(user_id, count=1):
         else:
             user.data_group_local_id = max(1, user.data_group_local_id+count)
 
-        print(f"update user{user_id}'s sentence to {user.data_group_local_id}")
+        print(f"user{user_id}'s sentence updated: {user.data_group_local_id}")
         session.commit()
     return
 
