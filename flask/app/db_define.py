@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import *
 from sqlalchemy.orm import *
 from sqlalchemy.ext.declarative import declarative_base
@@ -79,6 +81,7 @@ class User(Base):
     user_id = Column("user_id", Integer, primary_key=True)
     data_group = Column("data_group", String(20), nullable=False)
     data_group_local_id = Column("data_group_local_id", Integer, nullable=False)
+    created = Column("created", DATETIME, default=datetime.now, nullable=False)
 
 
 class Feedback(Base):
@@ -92,7 +95,7 @@ class Feedback(Base):
     data_group = Column("data_group", String(20), nullable=False)
     data_group_local_id = Column("data_group_local_id", Integer, nullable=False)
     label = Column("label", String(20), nullable=False)
-
+    created = Column("created", DATETIME, default=datetime.now, nullable=False)
 # ============================================================================================================
 # INIT_DBがTrueならDBを初期化する
 if config.MyConfig.INIT_DB:
