@@ -51,7 +51,7 @@ cryptography = "*"
 pyyaml = "*"
 markdown = "*"
 pymysql = "*"
-mysqlclient = "*"
+alembic = "*"
 
 [dev-packages]
 

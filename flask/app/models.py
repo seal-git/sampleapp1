@@ -37,10 +37,12 @@ def db_sample_random_generate():
 
 @app_.route("/get_sentence", methods=["POST"])
 # tsukuba_corpusを返す
+# 初期化で呼ばれる
 def get_sentence():
     response = request.get_json()
     print(f"get_sentence: {response}")
 
+    # user_idが指定されていなかったら生成する
     if response.get("user_id") is not None:
         user_id = response["user_id"]
     else:
@@ -48,7 +50,11 @@ def get_sentence():
             user_id = randint(100000, 999999)
             if not check_user_exist(user_id):
                 break
+    register_new_user(user_id)
 
+    # data_groupが指定されていたらuserを更新する(local_idは1に戻る)
+    if response.get("data_group") is not None:
+        update_user(user_id, data_group=response["data_group"])
 
     sentence = get_sentence_from_tsukuba_corpus(user_id=user_id)
     label = get_label(user_id)
@@ -72,7 +78,7 @@ def send_feedback():
     save_feedback(user_id, label)
     print(f"send_feedback: {response}")
     # 次のデータを送信
-    update_user_sentence(user_id)
+    first, last = update_user_sentence(user_id)
     sentence = get_sentence_from_tsukuba_corpus(
         user_id=user_id
     )
@@ -82,7 +88,15 @@ def send_feedback():
         "id": sentence["id"],
         "sentence": sentence["sentence"],
         "label": label,
+        "first": first,
+        "last": last,
     }
+    if last:
+        next_data_group = get_next_data_group(user_id)
+        data["next"] = {
+            "user_id" : user_id,
+            "data_group" : next_data_group
+        }
     return jsonify(data)
 
 @app_.route('/back', methods=['POST'])
@@ -104,3 +118,22 @@ def back():
         "label": label
     }
     return jsonify(data)
+
+@app_.route("/user", methods=["POST"])
+def user():
+    response = request.get_json()
+    # ユーザーデータを保存
+    print(f"user: {response}")
+    if response.get("mail"):
+        update_user(response["user_id"], mail=response["mail"])
+        return "success "
+    else:
+        return "mail is not found"
+
+@app_.route("/comment", methods=["POST"])
+def comment():
+    response = request.get_json()
+    print(f"comment: {response}")
+    # コメントデータを保存
+    save_comment(response["user_id"], response["comment"])
+    return "success"

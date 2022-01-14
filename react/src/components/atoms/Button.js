@@ -85,6 +85,7 @@ function Button(props) {
             <button
                 onClick={props.onClick}
                 id={props.id}
+                disabled={props.disabled}
             >
                 {icon}
                 {text}

@@ -1,7 +1,21 @@
 import subprocess
+from datetime import datetime, timezone, timedelta
 
+# パッケージのインストール
 res = subprocess.call('pipenv install --system', shell=True)
+
+# マイグレーションの自動実行
+# 詳しくはmigrations/READMEを参照
+now = datetime.now(tz=timezone(timedelta(hours=9)))
+message = now.strftime("%Y%m%d%H%M%S")
+cmd = f'alembic revision --autogenerate -m "{message}"'
+cmd += ' && alembic upgrade head'
+res = subprocess.call(cmd, shell=True)
+
+
+# テストの自動実行
 res = subprocess.call('pytest -s', shell=True)
+
 
 from app import app_
 
