@@ -68,7 +68,7 @@ function StartModal(props) {
             "mail": mailValue,
         };
         console.log(data);
-        myAxios.post('/api/user', data)
+        myAxios.post('/api/user', {data})
             .then(result => {
                 console.log(result["data"])
             })

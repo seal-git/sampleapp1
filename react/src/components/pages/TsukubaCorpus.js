@@ -95,7 +95,7 @@ function TsukubaCorpus(props) {
             data["data_group"] = dataGroup;
         }
         console.log(data)
-        myAxios.post('/api/get_sentence', data)
+        myAxios.post('/api/get_sentence', {data})
             .then(result => {
                 console.log(result["data"])
                 setSentence(result["data"]["sentence"]);
@@ -121,7 +121,7 @@ function TsukubaCorpus(props) {
             "label": label
         };
         setSentence("loading...")
-        myAxios.post('/api/SendFeedback', data)
+        myAxios.post('/api/SendFeedback', {data})
             .then(result => {
                 console.log('yes')
                 console.log(result)
@@ -146,7 +146,7 @@ function TsukubaCorpus(props) {
             "val": label
         };
         setSentence("loading...")
-        myAxios.post('/api/back', data)
+        myAxios.get('/api/back', {data})
             .then(result => {
                 console.log('back')
                 console.log(result)

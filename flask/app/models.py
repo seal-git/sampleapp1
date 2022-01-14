@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, abort
 import random
 
 from app import app_
@@ -6,7 +6,7 @@ from app.utils import reverse_sentence, generate_sentence
 from app.db import *
 
 
-@app_.route('/reverse', methods=['POST'])
+@app_.route('/reverse', methods=["POST",])
 # postされた文章を逆さ文にして返す
 def reverse():
     json_data = request.json
@@ -14,7 +14,7 @@ def reverse():
     return jsonify({"result": reverse_sentence(json_data)})
 
 
-@app_.route('/reverse_random', methods=['POST'])
+@app_.route('/reverse_random', methods=["POST",])
 # ランダムに逆さの文章を返す
 def reverse_random():
     result = db_random_generate("gutenberg_sentence")
@@ -22,24 +22,29 @@ def reverse_random():
     return jsonify({"result": result})
 
 
-@app_.route('/random', methods=['POST'])
+@app_.route('/random', methods=["POST",])
 # ランダムに文章を返す
 def random():
     return jsonify({"result": generate_sentence()})
 
 
-@app_.route('/db_sample_random_generate', methods=['POST'])
+@app_.route('/db_sample_random_generate', methods=["POST",])
 # ランダムにsample_db.gutenberg_sentenceから文章を返す
 def db_sample_random_generate():
     result_dict = db_random_generate("gutenberg_sentence")
     return jsonify(result_dict)
 
 
-@app_.route("/get_sentence", methods=["POST"])
+@app_.route("/get_sentence", methods=["POST",])
 # tsukuba_corpusを返す
 # 初期化で呼ばれる
 def get_sentence():
-    response = request.get_json()
+    if request.method == "GET":
+        response = request.args.to_dict()
+    elif request.method == "POST":
+        response = request.get_json()
+    else:
+        return abort(400)
     print(f"get_sentence: {response}")
 
     # user_idが指定されていなかったら生成する
@@ -68,7 +73,7 @@ def get_sentence():
     return jsonify(data)
 
 
-@app_.route('/SendFeedback', methods=['POST'])
+@app_.route('/SendFeedback', methods=["POST",])
 # feedback処理する
 def send_feedback():
     response = request.get_json()
@@ -99,7 +104,7 @@ def send_feedback():
         }
     return jsonify(data)
 
-@app_.route('/back', methods=['POST'])
+@app_.route('/back', methods=["POST",])
 # feedback処理する
 def back():
     response = request.get_json()
@@ -119,7 +124,7 @@ def back():
     }
     return jsonify(data)
 
-@app_.route("/user", methods=["POST"])
+@app_.route("/user", methods=["POST",])
 def user():
     response = request.get_json()
     # ユーザーデータを保存
@@ -130,7 +135,7 @@ def user():
     else:
         return "mail is not found"
 
-@app_.route("/comment", methods=["POST"])
+@app_.route("/comment", methods=["POST",])
 def comment():
     response = request.get_json()
     print(f"comment: {response}")
