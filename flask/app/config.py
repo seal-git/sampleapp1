@@ -16,4 +16,4 @@ class Config:
 
 class MyConfig:
     INIT_DATA = False # dataのcsvを読み直す
-    INIT_DB = True # 全て作り直す
+    INIT_DB = False # 全て作り直す
