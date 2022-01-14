@@ -50,8 +50,8 @@ flask-sqlalchemy = "*"
 cryptography = "*"
 pyyaml = "*"
 markdown = "*"
-pymysql = "*"
 alembic = "*"
+pymysql = "*"
 
 [dev-packages]
 

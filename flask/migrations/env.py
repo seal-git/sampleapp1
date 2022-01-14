@@ -9,7 +9,7 @@ import os
 # access to the values within the .ini file in use.
 config = context.config
 
-SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@%s:%s/%s?charset=utf8mb4' % (
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://%s:%s@%s:%s/%s?charset=utf8mb4' % (
     "root",  # user_name
     os.environ['MYSQL_ROOT_PASSWORD'],  # password
     'mysql',  # host_ip
