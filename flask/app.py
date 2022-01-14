@@ -14,7 +14,7 @@ res = subprocess.call(cmd, shell=True)
 
 
 # テストの自動実行
-res = subprocess.call('pytest -s', shell=True)
+# res = subprocess.call('pytest -s', shell=True)
 
 
 from app import app_
