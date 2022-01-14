@@ -45,7 +45,6 @@ function StartModal(props) {
     const onChange = (e) => {
         // バリデーションチェックしてボタンのdisableを操作する
         //onKeyPressだとBackSpaceなどが反応しないのでonChangeで発火させる
-        console.log(e.currentTarget.value)
         if (e.currentTarget.validity.valid === true) {
             setValid(true);
         } else {
