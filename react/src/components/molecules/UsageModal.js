@@ -6,7 +6,7 @@ import axios from "axios";
 import {myAxios} from "../myAxios";
 import Button from "../atoms/Button";
 
-function Usage(props){
+function UsageModal(props){
     let wrapperStyle = css`
       background-color: whitesmoke;
       width: 50vh;
@@ -28,4 +28,4 @@ function Usage(props){
     )
 }
 
-export default Usage;
+export default UsageModal;

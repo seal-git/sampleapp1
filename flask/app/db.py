@@ -1,3 +1,5 @@
+import re
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from flask import jsonify
@@ -12,15 +14,14 @@ def get_sentence_from_tsukuba_corpus(user_id):
     user_idがユーザーの識別子になる
     :return: sentence(dictとして返す)
     """
-    print("get from tsukuba corpus",user_id)
 
     with Session() as session:
-        register_new_user(user_id)
         user = session.query(User).filter_by(user_id=user_id).first()
         sentence = session.query(TsukubaCorpus).filter_by(
             data_group=user.data_group,
             data_group_local_id=user.data_group_local_id
             ).first().toDict()
+        print(f"user {user_id}: get from tsukuba corpus {sentence}")
     return sentence
 
 def register_new_user(user_id):
@@ -42,6 +43,26 @@ def register_new_user(user_id):
             print(f"user {user_id} is registered")
     return
 
+def update_user(user_id, mail=None, data_group=None):
+    """
+    メールアドレスを更新
+    """
+    if mail is None and data_group is None:
+        raise ValueError("引数がありません")
+        return
+
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        if mail is not None:
+            user.mail = mail
+            print(f"user{user_id}'s mail address updated: {user.mail}")
+        if data_group is not None:
+            user.data_group = data_group
+            user.data_group_local_id = 1
+            print(f"user{user_id}'s data group updated: {user.data_group}")
+        session.commit()
+    return
+
 def update_user_sentence(user_id, count=1):
     """
     ユーザーのdata_group_local_idを次の番号に当たるものに更新する
@@ -53,14 +74,21 @@ def update_user_sentence(user_id, count=1):
     with Session() as session:
         user = session.query(User).filter_by(user_id=user_id).first()
         data_num = session.query(TsukubaCorpus).filter_by(data_group=user.data_group).count()
+        first_flag = False
+        last_flag = False
         if count>=0:
             user.data_group_local_id = min(data_num, user.data_group_local_id+count)
         else:
             user.data_group_local_id = max(1, user.data_group_local_id+count)
 
+        if user.data_group_local_id == 1:
+            first_flag = True
+        if user.data_group_local_id == data_num:
+            last_flag = True
+
         print(f"user{user_id}'s sentence updated: {user.data_group_local_id}")
         session.commit()
-    return
+    return first_flag, last_flag
 
 def check_user_exist(user_id):
     """
@@ -104,6 +132,23 @@ def save_feedback(user_id, label):
         session.commit()
     return
 
+def save_comment(user_id, comment):
+    """
+    フィードバックコメントを保存する
+    """
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        new_comment = Comment(
+            user_id = user.user_id,
+            data_group = user.data_group,
+            comment = comment,
+        )
+        session.add(new_comment)
+        print(f"user{user.user_id}'s comment registered")
+        session.commit()
+    return
+
+
 def get_label(user_id):
     """
     userに現在表示している文のラベルが既にあればそれを返す
@@ -121,6 +166,22 @@ def get_label(user_id):
             return None
         else:
             return feedback.label
+
+def get_next_data_group(user_id):
+    """
+    現在表示しているデータグループの次のデータグループの名前を返す
+    tc1なら次はtc2になる。もし次がなかったらtc1を返す
+    """
+    with Session() as session:
+        user = session.query(User).filter_by(user_id=user_id).first()
+        next_data_group_num = int(re.sub(r"[a-zA-Z]","",user.data_group))+1
+        next_data_group = re.sub(r"[0-9]+", str(next_data_group_num), user.data_group)
+        sentence = session.query(TsukubaCorpus).filter_by(data_group=next_data_group).first()
+        if sentence is None:
+            next_data_group = re.sub(r"[0-9]+", "1", user.data_group)
+
+    return next_data_group
+
 
 
 
