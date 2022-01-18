@@ -22,6 +22,7 @@ function TsukubaCorpus(props) {
     const [sentence, setSentence] = useState('loading...');
     const [id, setId] = useState();
     const [label, setLabel] = useState();
+    const [position, setPosition] = useState();
     const [next, setNext] = useState("");
     const [Usage, openUsage, closeUsage, isUsageOpen] = useModal("root");
     const [Start, openStart, closeStart, isStartOpen] = useModal("root", {closeOnOverlayClick: false});
@@ -72,10 +73,13 @@ function TsukubaCorpus(props) {
       .id-area {
         padding: 0 2rem 0 2rem;
         background-color: #B1F1FF;
+        span{
+          padding-right: 20px;
+        }
       }
 
       .sentence-area {
-        padding: 0 2rem 0 2rem;
+        padding: 1rem 2rem 0 2rem;
         min-height: 10rem;
       }
     `
@@ -85,6 +89,16 @@ function TsukubaCorpus(props) {
       gap: 30px;
     `
 
+    const setInfo = (result) => {
+        /*
+        文章情報をsetStateする
+         */
+        console.log(result["data"])
+        setSentence(result["data"]["sentence"]);
+        setId(result["data"]["id"]);
+        setLabel(result["data"]["label"]);
+        setPosition(result["data"]["position"]);
+    }
 
     const initSession = (userId, dataGroup) => {
         let data = {};
@@ -97,10 +111,7 @@ function TsukubaCorpus(props) {
         console.log(data)
         myAxios.post('/api/get_sentence', data)
             .then(result => {
-                console.log(result["data"])
-                setSentence(result["data"]["sentence"]);
-                setId(result["data"]["id"]);
-                setLabel(result["data"]["label"])
+                setInfo(result);
                 if (userId === null) {
                     setUserId(result["data"]["user_id"]);
                 }
@@ -125,9 +136,7 @@ function TsukubaCorpus(props) {
             .then(result => {
                 console.log('yes')
                 console.log(result)
-                setSentence(result["data"]["sentence"]);
-                setId(result["data"]["id"]);
-                setLabel(result["data"]["label"])
+                setInfo(result);
                 if (result["data"]["last"] === true) {
                     setNext(result["data"]["next"])
                     openEnd();
@@ -143,16 +152,14 @@ function TsukubaCorpus(props) {
     const onClickBack = () => {
         const data = {
             "user_id": userId, //100000~999999
-            "val": label
+            "label": label //バックでの処理は未実装
         };
         setSentence("loading...")
         myAxios.post('/api/back', data)
             .then(result => {
                 console.log('back')
                 console.log(result)
-                setSentence(result["data"]["sentence"]);
-                setId(result["data"]["id"]);
-                setLabel(result["data"]["label"])
+                setInfo(result);
             })
             .catch(error => {
                 console.log('error')
@@ -182,7 +189,9 @@ function TsukubaCorpus(props) {
                 </div>
                 <div css={sentenceAreaStyle}>
                     <div className={"id-area"}>
-                        ID {id}
+                        <span>ID {id} </span>
+                        <span>{position}</span>
+
                     </div>
                     <div className={"sentence-area"}>
                         {sentence}
