@@ -20,6 +20,7 @@ def test_register_new_user():
 
 def test_update_user():
     with app_.app_context():
+        update_user(user_id=1, data_group="tc1")
         update_user(user_id=2, data_group="tc23")
         assert 1
 

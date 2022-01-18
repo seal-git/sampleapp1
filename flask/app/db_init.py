@@ -58,7 +58,7 @@ def read_gutenberg_sentence():
 def read_tsukuba_corpus():
     with Session() as session:
         # annotation01_tsukuba_corpus_20140930.tsvを読み込み
-        result = session.query(TsukubaCorpus).count()
+        result = session.query(TsukubaCorpus.id).count()
         print(result)
         if result == 0:
             filepath = Path("data/annotation01_tsukuba_corpus_20140930.tsv")
@@ -100,6 +100,12 @@ def add_data_group():
             sentence.data_group_local_id = data_group_local_id
         session.commit()
 
+    with Session() as session:
+        sentence_list = session.query(TsukubaCorpus).all()
+        for i, sentence in enumerate(sentence_list):
+            count = session.query(TsukubaCorpus).filter_by(data_group=sentence.data_group).count()
+            sentence.data_group_all = count
+        session.commit()
 
 
 def fill_null():
@@ -113,8 +119,9 @@ def fill_null():
 
 
 
-print("executing db_init")
-read_gutenberg_sentence()
-read_tsukuba_corpus()
-add_data_group()
-fill_null()
+def run():
+    print("executing db_init")
+    read_gutenberg_sentence()
+    read_tsukuba_corpus()
+    add_data_group()
+    fill_null()

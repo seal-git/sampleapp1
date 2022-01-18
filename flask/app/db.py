@@ -74,21 +74,14 @@ def update_user_sentence(user_id, count=1):
     with Session() as session:
         user = session.query(User).filter_by(user_id=user_id).first()
         data_num = session.query(TsukubaCorpus).filter_by(data_group=user.data_group).count()
-        first_flag = False
-        last_flag = False
         if count>=0:
             user.data_group_local_id = min(data_num, user.data_group_local_id+count)
         else:
             user.data_group_local_id = max(1, user.data_group_local_id+count)
 
-        if user.data_group_local_id == 1:
-            first_flag = True
-        if user.data_group_local_id == data_num:
-            last_flag = True
-
         print(f"user{user_id}'s sentence updated: {user.data_group_local_id}")
         session.commit()
-    return first_flag, last_flag
+    return
 
 def check_user_exist(user_id):
     """

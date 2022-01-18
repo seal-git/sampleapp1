@@ -1,23 +1,16 @@
+from app import app_ , app_init
+
 import subprocess
 from datetime import datetime, timezone, timedelta
 
-# パッケージのインストール
-res = subprocess.call('pipenv install --system', shell=True)
-
-# マイグレーションの自動実行
-# 詳しくはmigrations/READMEを参照
+# マイグレーションコードの自動生成
 now = datetime.now(tz=timezone(timedelta(hours=9)))
 message = now.strftime("%Y%m%d%H%M%S")
 cmd = f'alembic revision --autogenerate -m "{message}"'
-cmd += ' && alembic upgrade head'
-res = subprocess.call(cmd, shell=True)
 
-
-# テストの自動実行
-# res = subprocess.call('pytest -s', shell=True)
-
-
-from app import app_
+res = subprocess.Popen(cmd, shell=True)
+res.wait()
 
 if __name__ == '__main__':
+    app_init.run()
     app_.run(host="0.0.0.0", port=5000, debug=True)  # debug=Trueで自動更新されるようになる

@@ -59,5 +59,13 @@ services:
       --secure-file-priv="/docker-entrypoint-initdb.d"
     tty: true
 
+  sag:
+    image: grafana/grafana
+    container_name: sag
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "10001:3000"
 volumes:
     mysql-data:
+    grafana-data:
