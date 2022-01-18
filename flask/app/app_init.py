@@ -18,7 +18,7 @@ def run():
     db_init.run()
 
     # テストの自動実行
-    cmd = "pytest -s"
+    # cmd = "pytest -s"
     res = subprocess.Popen(cmd, shell=True)
     res.wait()
 
