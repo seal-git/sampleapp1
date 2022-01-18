@@ -100,7 +100,7 @@ function TsukubaCorpus(props) {
         setPosition(result["data"]["position"]);
     }
 
-    const initSession = (userId, dataGroup) => {
+    const initSession = () => {
         let data = {};
         if (userId !== null) {
             data["user_id"] = userId;
