@@ -71,7 +71,7 @@ services:
     image: doccano/doccano
     container_name: doccano
     ports:
-      - "10002:8000"
+      - "20000:8000"
     environment:
       - ADMIN_USERNAME=admin
       - ADMIN_EMAIL=admin@example.com
