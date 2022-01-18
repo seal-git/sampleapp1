@@ -69,6 +69,7 @@ class TsukubaCorpus(Base):
     label2 = Column("label2", String(20))
     sentence = Column("sentence", LONGTEXT)
     data_group = Column("data_group", String(20))
+    data_group_all = Column("data_group_all", Integer) # data_groupの総数
     data_group_local_id = Column("data_group_local_id", Integer)
 
 class User(Base):
@@ -97,6 +98,7 @@ class Feedback(Base):
     data_group_local_id = Column("data_group_local_id", Integer, nullable=False)
     label = Column("label", String(20), nullable=False)
     created = Column('created', DATETIME, default=datetime.now, nullable=False)
+
 
 class Comment(Base):
     """

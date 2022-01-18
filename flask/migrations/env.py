@@ -49,6 +49,7 @@ def run_migrations_offline():
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
     )
+    print("start migration offline")
 
     with context.begin_transaction():
         context.run_migrations()
@@ -66,6 +67,8 @@ def run_migrations_online():
             if script.upgrade_ops.is_empty():
                 print("migration is skipped")
                 directives[:] = []
+            else:
+                print("start migration online")
 
 
     connectable = engine_from_config(

@@ -14,7 +14,7 @@ db_.init_app(app_)
 # import app.make_about_us_content_html
 # import app.make_views
 
-import app.db_init
+
 import app.views
 import app.models
 
