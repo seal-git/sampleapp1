@@ -2,11 +2,11 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app){
   app.use(
-    '/api',
+    'yoshinari/api',
     createProxyMiddleware({
       target: 'http://sab:5000',
       // changeOrigin: true,
-      pathRewrite: { '^/api': '' }
+      pathRewrite: { '^/yoshinari/api': '' }
     })
   );
 };
