@@ -9,6 +9,10 @@ import {Link} from "react-router-dom";
 
 function EndModal(props) {
     const inputRef = useRef("");
+    let nextUrl;
+    if (props.next != null) {
+        nextUrl = "/tsukuba-corpus?dataGroup=" + props.next["data_group"];
+    }
 
     let wrapperStyle = css`
       background-color: whitesmoke;
@@ -68,9 +72,9 @@ function EndModal(props) {
             })
 
     }
-    const onLinkClick = () =>{
+    const onLinkClick = () => {
         props.close();
-        props.init(props.next["user_id"],props.next["data_group"])
+        props.init(props.next["user_id"], props.next["data_group"])
     }
     console.log(props.next)
     return (
@@ -86,7 +90,8 @@ function EndModal(props) {
                 これで終了する場合、このウィンドウは閉じてください <br/>
             </p>
             <p>
-                <b>続ける場合は<Link to={props.nextUrl} onClick={onLinkClick}>こちらをクリック</Link></b>
+                <b>続ける場合は<Link to={nextUrl}
+                               onClick={onLinkClick}>こちらをクリック</Link></b>
             </p>
             <div css={formStyle}>
                 <textarea ref={inputRef}
@@ -97,7 +102,7 @@ function EndModal(props) {
                 <Button id={"submit"}
                         text={"送信"}
                         onClick={onButtonClick}
-                        />
+                />
             </div>
         </div>
     )

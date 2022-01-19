@@ -23,7 +23,7 @@ function TsukubaCorpus(props) {
     const [id, setId] = useState();
     const [label, setLabel] = useState();
     const [position, setPosition] = useState();
-    const [next, setNext] = useState("");
+    const [next, setNext] = useState();
     const [Usage, openUsage, closeUsage, isUsageOpen] = useModal("root");
     const [Start, openStart, closeStart, isStartOpen] = useModal("root", {closeOnOverlayClick: false});
     const [End, openEnd, closeEnd, isEndOpen] = useModal("root",);
@@ -36,7 +36,7 @@ function TsukubaCorpus(props) {
 
     useEffect(() => {
         //初期描画時に文を取得
-        initSession(userId);
+        initSession(userId, dataGroup);
         //StartModalを表示
         openStart();
 
@@ -98,9 +98,10 @@ function TsukubaCorpus(props) {
         setId(result["data"]["id"]);
         setLabel(result["data"]["label"]);
         setPosition(result["data"]["position"]);
+        setNext(result["data"]["next"])
     }
 
-    const initSession = () => {
+    const initSession = (userId, dataGroup) => {
         let data = {};
         if (userId !== null) {
             data["user_id"] = userId;
@@ -137,8 +138,8 @@ function TsukubaCorpus(props) {
                 console.log('yes')
                 console.log(result)
                 setInfo(result);
-                if (result["data"]["last"] === true) {
-                    setNext(result["data"]["next"])
+                if (next != null) {
+                    console.log(next)
                     openEnd();
                 }
             })

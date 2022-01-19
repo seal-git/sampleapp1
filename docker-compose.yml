@@ -67,15 +67,15 @@ services:
     ports:
       - "10001:3000"
 
-  doccano:
-    image: doccano/doccano
-    container_name: doccano
-    ports:
-      - "10002:8000"
-    environment:
-      - ADMIN_USERNAME=admin
-      - ADMIN_EMAIL=admin@example.com
-      - ADMIN_PASSWORD=password
+#  doccano:
+#    image: doccano/doccano
+#    container_name: doccano
+#    ports:
+#      - "20000:8000"
+#    environment:
+#      - ADMIN_USERNAME=admin
+#      - ADMIN_EMAIL=admin@example.com
+#      - ADMIN_PASSWORD=password
 
 volumes:
     mysql-data:
