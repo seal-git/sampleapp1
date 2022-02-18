@@ -53,6 +53,8 @@ services:
     volumes:
       # 初期データを投入するSQLが格納されているdir
 #      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      # dumpファイル用
+      - ./mysql/dump:/dump
       # 永続化するときにマウントするdir(ホスト側は空のディレクトリをマウントしないと初期データは登録されない！)
       - mysql-data:/var/lib/mysql
     command:
