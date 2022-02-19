@@ -23,7 +23,7 @@ jobs:
           ssh -oStrictHostKeyChecking=no ${SSH_USER}@${SSH_ADDR}
           -p ${SSH_PORT}
           -i secret_key
-          -t ssh sandbox "source sampleapp1/deploy.sh"
+          "source ~/sampleapp1/deploy.sh"
 
 
 
