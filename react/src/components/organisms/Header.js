@@ -49,7 +49,7 @@ function Header(props) {
             <div css={leftWrapperStyle}>
                 <Link to={"/"}>
                     <div css={TextStyle}>
-                        Annotation Tool
+                        ダレカノ
                     </div>
                 </Link>
             </div>
