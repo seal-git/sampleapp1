@@ -22,7 +22,7 @@ services:
       context: ./Dockerfiles
       dockerfile: Dockerfile-react
     ports:
-    - "10000:3000"
+    - "3000:3000"
     - "6006:6006"
     restart: on-failure
     volumes:
@@ -67,17 +67,7 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
     ports:
-      - "10001:3000"
-
-#  doccano:
-#    image: doccano/doccano
-#    container_name: doccano
-#    ports:
-#      - "20000:8000"
-#    environment:
-#      - ADMIN_USERNAME=admin
-#      - ADMIN_EMAIL=admin@example.com
-#      - ADMIN_PASSWORD=password
+      - "3001:3000"
 
 volumes:
     mysql-data:
