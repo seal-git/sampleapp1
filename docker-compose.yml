@@ -38,7 +38,7 @@ services:
       context: ./Dockerfiles
       dockerfile: Dockerfile-mysql
     restart: on-failure
-    hostname: mysql
+    hostname: sad
     env_file:
       - .env
     environment:

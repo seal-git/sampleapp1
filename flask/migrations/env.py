@@ -12,7 +12,7 @@ config = context.config
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://%s:%s@%s:%s/%s?charset=utf8mb4' % (
     "root",  # user_name
     os.environ['MYSQL_ROOT_PASSWORD'],  # password
-    'mysql',  # host_ip
+    'sad',  # host_ip
     '3306',  # port
     'sa_db'  # db_name
 )
