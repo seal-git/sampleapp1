@@ -6,6 +6,10 @@ import axios from "axios";
 import {myAxios} from "../myAxios";
 import Button from "../atoms/Button";
 
+/*
+読み込み時に表示されるモーダル
+Usageにまとめたので廃止！
+ */
 function StartModal(props) {
     const inputRef = useRef();
     const [mail, setMail] = useState();
@@ -24,6 +28,9 @@ function StartModal(props) {
       h1 {
         font-size: medium;
       }
+      max-height: 50vh;
+      overflow: scroll;
+
     `
     let formStyle = css`
       font-size: large;
@@ -53,7 +60,7 @@ function StartModal(props) {
     }
     const onKeyPress = (e) => {
         // Enterキーで送信
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && e.target.validity.valid === true) {
             onClick();
         }
     }
@@ -91,7 +98,7 @@ function StartModal(props) {
                 本ページでは、ホテルのレビュー文に対してラベルを付与していただきます。全部で200文、所要時間は15分程です。
             </p>
             <p>
-                アノテーション後に何点かお尋ねすることがあるかもしれないので、NAISTメールアドレスを教えてください。
+                アノテーション後に何点かお尋ねすることがあるかもしれないので、連絡していいメールアドレスを教えてください。
             </p>
 
             <div css={formStyle}>
@@ -99,11 +106,11 @@ function StartModal(props) {
                        id={"mail"}
                        type={"email"}
                        name={"mail"}
-                       pattern={"^[a-z0-9\.]+@.+\.naist\.jp$"}
                        autoFocus={"focus"}
-                       title={"NAISTメールアドレスを入力してください"}
+                       title={"メールアドレスを入力してください"}
                        onChange={onChange}
                        onKeyPress={onKeyPress}
+                       required={true}
                 />
             </div>
             <div css={buttonAreaStyle}>

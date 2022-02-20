@@ -2,7 +2,7 @@
   "name": "workspace",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/yoshinari",
+  "homepage": "/",
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@emotion/babel-plugin": "^11.3.0",

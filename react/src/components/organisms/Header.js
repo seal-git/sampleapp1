@@ -47,15 +47,17 @@ function Header(props) {
     return (
         <div css={wrapperStyle}>
             <div css={leftWrapperStyle}>
-                <Link to={"/"}>
+                <Link to={"/tsukuba-corpus"}>
                     <div css={TextStyle}>
-                        Annotation Tool
+                        ダレカノ
                     </div>
                 </Link>
             </div>
             <div css={rightWrapperStyle}>
+                <Link to={"/tsukuba-corpus"}>
                 <div css={TextStyle}>Home</div>
                 <div css={TextStyle}>About Us</div>
+                </Link>
             </div>
         </div>
     )
