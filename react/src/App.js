@@ -20,7 +20,7 @@ function App() {
     //     {basename: '/yoshinari/'}
     // );
     return (
-        <Router basename={"/yoshinari"}>
+        <Router>
             <div className="App">
                 <Switch>
                     <Route exact path='/' component={Menu}/>

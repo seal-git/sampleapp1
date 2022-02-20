@@ -40,9 +40,7 @@ def db_sample_random_generate():
 # tsukuba_corpusを返す
 # 初期化で呼ばれる
 def get_sentence():
-    if request.method == "GET":
-        response = request.args.to_dict()
-    elif request.method == "POST":
+    if request.method == "POST":
         response = request.get_json()
     else:
         return abort(400)

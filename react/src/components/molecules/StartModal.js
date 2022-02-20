@@ -6,6 +6,10 @@ import axios from "axios";
 import {myAxios} from "../myAxios";
 import Button from "../atoms/Button";
 
+/*
+読み込み時に表示されるモーダル
+Usageにまとめたので廃止！
+ */
 function StartModal(props) {
     const inputRef = useRef();
     const [mail, setMail] = useState();
@@ -56,7 +60,6 @@ function StartModal(props) {
     }
     const onKeyPress = (e) => {
         // Enterキーで送信
-        console.log(e)
         if (e.key === "Enter" && e.target.validity.valid === true) {
             onClick();
         }

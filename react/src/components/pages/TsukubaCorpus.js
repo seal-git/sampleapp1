@@ -24,7 +24,7 @@ function TsukubaCorpus(props) {
     const [label, setLabel] = useState();
     const [position, setPosition] = useState();
     const [next, setNext] = useState();
-    const [Usage, openUsage, closeUsage, isUsageOpen] = useModal("root");
+    const [Usage, openUsage, closeUsage, isUsageOpen] = useModal("root", {closeOnOverlayClick: false});
     const [Start, openStart, closeStart, isStartOpen] = useModal("root", {closeOnOverlayClick: false});
     const [End, openEnd, closeEnd, isEndOpen] = useModal("root",);
 
@@ -34,11 +34,13 @@ function TsukubaCorpus(props) {
     const [userId, setUserId] = useState(query.get("userId"));
     const [dataGroup, setDataGroup] = useState(query.get("dataGroup"));
 
+
+
     useEffect(() => {
         //初期描画時に文を取得
         initSession(userId, dataGroup);
         //StartModalを表示
-        openStart();
+        openUsage();
 
     }, [])
     useEffect(() => {
@@ -73,7 +75,8 @@ function TsukubaCorpus(props) {
       .id-area {
         padding: 0 2rem 0 2rem;
         background-color: #B1F1FF;
-        span{
+
+        span {
           padding-right: 20px;
         }
       }
@@ -88,12 +91,21 @@ function TsukubaCorpus(props) {
       justify-content: center;
       gap: 30px;
     `
+    const getUserIdFromLS = () => {
+        //localStorageからUserIdを取得する
+        //取得に成功したらURL書き換え
+        let userIdOnLS = localStorage.getItem("userId");
+        if (userIdOnLS != null) {
+            console.log(`read userId from LS: ${userIdOnLS}`)
+        }
+        return userIdOnLS;
+    }
 
     const setInfo = (result) => {
         /*
-        文章情報をsetStateする
+        APIから返ってきた文章情報をsetStateする
          */
-        console.log(result["data"])
+        // console.log(result["data"])
         setSentence(result["data"]["sentence"]);
         setId(result["data"]["id"]);
         setLabel(result["data"]["label"]);
@@ -102,6 +114,20 @@ function TsukubaCorpus(props) {
     }
 
     const initSession = (userId, dataGroup) => {
+        /*
+        初回読み込み時に走る関数
+         */
+
+        //userIdがクエリで未指定ならLSを探す
+        if(userId === null){
+            userId = getUserIdFromLS();
+            setUserId(userId);
+            window.history.replaceState(
+                {},
+                "",
+                `?userId=${userId}`)
+        }
+
         let data = {};
         if (userId !== null) {
             data["user_id"] = userId;
@@ -109,7 +135,7 @@ function TsukubaCorpus(props) {
         if (dataGroup !== null) {
             data["data_group"] = dataGroup;
         }
-        console.log(data)
+        // console.log(data)
         myAxios.post('/api/get_sentence', data)
             .then(result => {
                 setInfo(result);
@@ -119,7 +145,9 @@ function TsukubaCorpus(props) {
                 window.history.replaceState(
                     {},
                     "",
-                    `?userId=${result["data"]["user_id"]}`)
+                    `?userId=${result["data"]["user_id"]}`
+                )
+                localStorage.setItem("userId", result["data"]["user_id"]);
             })
             .catch(error => {
                 return 'error';
@@ -173,12 +201,11 @@ function TsukubaCorpus(props) {
         <PageTemplate>
             <div css={wrapperStyle}>
                 <div css={titleStyle}>
-                    Type A
                 </div>
                 <div css={optionAreaStyle}>
                     <Button type={"usage"} onClick={openUsage}/>
                     <Usage>
-                        <UsageModal close={closeUsage}/>
+                        <UsageModal close={closeUsage} userId={userId}/>
                     </Usage>
                     <Start>
                         <StartModal close={closeStart} userId={userId}/>
