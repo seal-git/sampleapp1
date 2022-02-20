@@ -57,6 +57,8 @@ def update_user(user_id, mail=None, data_group=None):
             user.mail = mail
             print(f"user{user_id}'s mail address updated: {user.mail}")
         if data_group is not None:
+            if not data_group in [f"tc{i}" for i in range(1,24)]:
+                data_group = "tc1"
             user.data_group = data_group
             user.data_group_local_id = 1
             print(f"user{user_id}'s data group updated: {user.data_group}")
