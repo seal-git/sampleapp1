@@ -35,7 +35,6 @@ function TsukubaCorpus(props) {
     const [dataGroup, setDataGroup] = useState(query.get("dataGroup"));
 
 
-
     useEffect(() => {
         //初期描画時に文を取得
         initSession(userId, dataGroup);
@@ -93,7 +92,6 @@ function TsukubaCorpus(props) {
     `
     const getUserIdFromLS = () => {
         //localStorageからUserIdを取得する
-        //取得に成功したらURL書き換え
         let userIdOnLS = localStorage.getItem("userId");
         if (userIdOnLS != null) {
             console.log(`read userId from LS: ${userIdOnLS}`)
@@ -119,13 +117,15 @@ function TsukubaCorpus(props) {
          */
 
         //userIdがクエリで未指定ならLSを探す
-        if(userId === null){
+        if (userId === null) {
             userId = getUserIdFromLS();
-            setUserId(userId);
-            window.history.replaceState(
-                {},
-                "",
-                `?userId=${userId}`)
+            if (userId != null) {
+                setUserId(userId);
+                window.history.replaceState(
+                    {},
+                    "",
+                    `?userId=${userId}`)
+            }
         }
 
         let data = {};
@@ -135,13 +135,12 @@ function TsukubaCorpus(props) {
         if (dataGroup !== null) {
             data["data_group"] = dataGroup;
         }
-        // console.log(data)
+        console.log(data)
         myAxios.post('/api/get_sentence', data)
             .then(result => {
+                console.log(result)
                 setInfo(result);
-                if (userId === null) {
-                    setUserId(result["data"]["user_id"]);
-                }
+                setUserId(result["data"]["user_id"]);
                 window.history.replaceState(
                     {},
                     "",
