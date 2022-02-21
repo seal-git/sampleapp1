@@ -53,7 +53,7 @@ def get_sentence():
             user_id = randint(100000, 999999)
             if not check_user_exist(user_id):
                 break
-    register_new_user(user_id)
+        register_new_user(user_id)
 
     # data_groupが指定されていたらuserを更新する(local_idは1に戻る)
     if response.get("data_group") is not None:
