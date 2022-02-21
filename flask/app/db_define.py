@@ -79,7 +79,7 @@ class User(Base):
     """
     __tablename__ = "user"
     __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
-    user_id = Column("user_id", Integer, primary_key=True)
+    user_id = Column("user_id", String(20), primary_key=True)
     mail = Column("mail", String(100),)
     data_group = Column("data_group", String(20), nullable=False)
     data_group_local_id = Column("data_group_local_id", Integer, default=1, nullable=False)
@@ -93,7 +93,7 @@ class Feedback(Base):
     __tablename__ = "feedback"
     __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
     feedback_id = Column("feedback_id", Integer, autoincrement=True, primary_key=True)
-    user_id = Column("user_id", Integer, nullable=False)
+    user_id = Column("user_id", String(20), nullable=False)
     data_group = Column("data_group", String(20), nullable=False)
     data_group_local_id = Column("data_group_local_id", Integer, nullable=False)
     label = Column("label", String(20), nullable=False)
@@ -107,7 +107,7 @@ class Comment(Base):
     __tablename__ = "comment"
     __table_args__ = ({"mysql_charset": "utf8mb4", "mysql_engine": "InnoDB"})
     comment_id = Column("comment_id", Integer, autoincrement=True, primary_key=True)
-    user_id = Column("user_id", Integer, nullable=False)
+    user_id = Column("user_id", String(20), nullable=False)
     data_group = Column("data_group", String(20), nullable=False)
     comment = Column("comment", LONGTEXT, nullable=False)
     created = Column('created', DATETIME, default=datetime.now, nullable=False)
