@@ -17,12 +17,17 @@ def get_sentence_from_tsukuba_corpus(user_id):
 
     with Session() as session:
         user = session.query(User).filter_by(user_id=user_id).first()
-        sentence = session.query(TsukubaCorpus).filter_by(
-            data_group=user.data_group,
-            data_group_local_id=user.data_group_local_id
-            ).first().toDict()
-        print(f"user {user_id}: get from tsukuba corpus {sentence}")
-    return sentence
+        try:
+            sentence = session.query(TsukubaCorpus).filter_by(
+                data_group=user.data_group,
+                data_group_local_id=user.data_group_local_id
+                ).first().toDict()
+            print(f"user {user_id}: get from tsukuba corpus {sentence}")
+            return sentence
+        except AttributeError as e:
+            print(f"user {user}: AttributeError ")
+            return e
+
 
 def register_new_user(user_id):
     """
@@ -75,7 +80,11 @@ def update_user_sentence(user_id, count=1):
     """
     with Session() as session:
         user = session.query(User).filter_by(user_id=user_id).first()
-        data_num = session.query(TsukubaCorpus).filter_by(data_group=user.data_group).count()
+        try:
+            data_num = session.query(TsukubaCorpus).filter_by(data_group=user.data_group).count()
+        except AttributeError:
+            print(f"AttributeError {user.toDict()}")
+
         if count>=0:
             user.data_group_local_id = min(data_num, user.data_group_local_id+count)
         else:

@@ -26,15 +26,16 @@ def test_update_user():
 
 def test_get_sentence_from_tsukuba_corpus():
     with app_.app_context():
-        result = get_sentence_from_tsukuba_corpus(user_id=1)
-        print(result["sentence"], result["id"])
-        assert (result["id"] >= 1)
+        result1 = get_sentence_from_tsukuba_corpus(user_id=1)
+        print(result1["sentence"], result1["id"])
+        assert (result1["id"] >= 1)
 
-def test_get_sentence_from_tsukuba_corpus2():
-    with app_.app_context():
-        result = get_sentence_from_tsukuba_corpus(user_id=2)
-        print(result["sentence"], result["id"])
-        assert (result["id"] >= 1)
+        result2 = get_sentence_from_tsukuba_corpus(user_id=2)
+        print(result2["sentence"], result2["id"])
+        assert (result2["id"] >= 1)
+
+        result3 = get_sentence_from_tsukuba_corpus(user_id=404)
+        assert (type(result3) == AttributeError)
 
 def test_get_next_data_group():
     with app_.app_context():

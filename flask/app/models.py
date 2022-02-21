@@ -46,14 +46,16 @@ def get_sentence():
         return abort(400)
     print(f"get_sentence: {response}")
 
-    # user_idが指定されていないか不正なら生成する
-    user_id = response.get("user_id")
+    # user_idが指定されていないなら生成する
+    # user_idが指定されていても存在しないなら生成する
+    user_id: str = response.get("user_id")
+
     if user_id is None or not check_user_exist(user_id):
         while 1:
-            user_id = randint(100000, 999999)
+            user_id = str(randint(100000, 999999))
             if not check_user_exist(user_id):
                 break
-        register_new_user(user_id)
+        _ = register_new_user(user_id)
 
     # data_groupが指定されていたらuserを更新する(local_idは1に戻る)
     if response.get("data_group") is not None:
